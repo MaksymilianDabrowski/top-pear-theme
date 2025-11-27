@@ -1,0 +1,14 @@
+# Zależności NPM (tego NIGDY nie wysyłamy)
+node_modules/
+npm-debug.log
+
+# Pliki systemowe
+.DS_Store
+Thumbs.db
+
+# Ustawienia edytora (opcjonalnie)
+.vscode/
+.idea/
+
+# Pliki konfiguracyjne środowiska (jeśli kiedyś będziesz używać)
+.env
