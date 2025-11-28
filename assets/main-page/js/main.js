@@ -1,66 +1,67 @@
-// FAQ icon rotations
 document.addEventListener('DOMContentLoaded', function () {
+
+    // lucide dec
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons({
+            icons: lucide.icons,
+            attrs: { 'stroke-width': 1.5, 'class': "lucide-icon" }
+        });
+    }
+
+    // faq dec
     const faqItems = document.querySelectorAll('.faq-item');
 
-    if (!faqItems.length) return;
+    if (faqItems.length) {
+        faqItems.forEach((item, index) => {
+            const button = item.querySelector('.faq-question');
+            const content = item.querySelector('.faq-answer');
 
-    faqItems.forEach(item => {
-        const button = item.querySelector('.faq-question');
-        const content = item.querySelector('.faq-answer');
-        const icon = item.querySelector('.plus-icon');
+            if (!button || !content) return;
 
-        // closed on default
-        content.style.display = 'none';
-        button.setAttribute('aria-expanded', 'false');
-        if (icon) icon.style.transform = 'rotate(0deg)';
-
-        button.addEventListener('click', () => {
-            const isExpanded = button.getAttribute('aria-expanded') === 'true';
-
-            faqItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.querySelector('.faq-answer').style.display = 'none';
-                    otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-                    const otherIcon = otherItem.querySelector('.plus-icon');
-                    if (otherIcon) otherIcon.style.transform = 'rotate(0deg)'; // closing prev question
-                }
-            });
-
-            if (isExpanded) {
-                content.style.display = 'none';
-                button.setAttribute('aria-expanded', 'false');
-                if (icon) icon.style.transform = 'rotate(0deg)'; // rotation
-            } else {
+            if (index === 0) {
                 content.style.display = 'block';
                 button.setAttribute('aria-expanded', 'true');
-                if (icon) icon.style.transform = 'rotate(180deg)'; // rotation
+            } else {
+                content.style.display = 'none';
+                button.setAttribute('aria-expanded', 'false');
             }
+
+            button.onclick = function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+
+                const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+                faqItems.forEach(otherItem => {
+                    const otherContent = otherItem.querySelector('.faq-answer');
+                    const otherButton = otherItem.querySelector('.faq-question');
+
+                    if (otherItem === item) {
+                        if (isExpanded) {
+                            otherContent.style.display = 'none';
+                            otherButton.setAttribute('aria-expanded', 'false');
+                        } else {
+                            otherContent.style.display = 'block';
+                            otherButton.setAttribute('aria-expanded', 'true');
+                        }
+                    } else {
+                        otherContent.style.display = 'none';
+                        otherButton.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            };
         });
-    });
-});
+    }
 
-// swiper slide section - WIP
-document.addEventListener('DOMContentLoaded', function () {
-
+    // swiper decs
     var swiperElement = document.querySelector('.mySwiper-about');
-
     if (swiperElement && typeof Swiper !== 'undefined') {
-        var swiperAbout = new Swiper(".mySwiper-about", {
-            slidesPerView: 1,
-            spaceBetween: 0,
-            loop: true,
-            effect: "fade",
-            fadeEffect: {
-                crossFade: true
-            },
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: false,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
+        new Swiper(".mySwiper-about", {
+            slidesPerView: 1, spaceBetween: 0, loop: true,
+            effect: "fade", fadeEffect: { crossFade: true },
+            autoplay: { delay: 4000, disableOnInteraction: false },
+            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
         });
     }
 });

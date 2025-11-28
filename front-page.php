@@ -8,14 +8,11 @@ $hero_bg_image = get_field('home_hero_bg_image');
 ?>
 <main id="hero" class="site-main">
     <!-- HERO background -->
-    <section id="hero" class=" section section-hero relative w-full min-h-[70vh]
-        bg-cover bg-center overflow-hidden rounded-tr-[240px]" style="
-        background-image: url('<?php echo esc_url($hero_bg_image); ?> ');">
-        <div class="absolute inset-0 bg-black/25"></div>
+    <section id="hero"
+        class="section section-hero relative w-full min-h-[70vh] bg-cover bg-center overflow-hidden rounded-tr-[240px]"
+        style="background-image: url('<?php echo esc_url($hero_bg_image); ?>');">
 
-        <div class="container mx-auto px-4 z-10 relative flex h-full items-center justify-center">
-        </div>
-
+        <div class="absolute inset-0 bg-black/25 z-[1]"></div>
     </section>
 
     <!-- white block -->
@@ -31,6 +28,7 @@ $hero_bg_image = get_field('home_hero_bg_image');
     $collage_images = get_field('home_about_collage_images'); // ACF Gallery Field
     ?>
 
+
     <section id="about"
         class="section section-about w-full text-white min-h-screen bg-center bg-cover overflow-hidden bg-black"
         style="background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('<?php echo esc_url($about_bg_image); ?>');">
@@ -40,31 +38,32 @@ $hero_bg_image = get_field('home_hero_bg_image');
             <div class="flex flex-wrap lg:flex-nowrap justify-between items-center gap-12 w-full">
 
                 <div class="w-full lg:w-1/2 pr-0 lg:pr-12 pt-10">
-                    <h2 class="text-xl md:text-3xl mb-10 text-white tracking-wide leading-relaxed max-w-xl lg:max-w-md">
-                        <?php
-                        // Logika pogrubiania tekstu
-                        $sentence_to_bold = "Każda wyprawa Top Pear to połączenie pasji, stylu i wolności.";
-                        if ($about_main_text) {
-                            $replace_with = '<span class="font-semibold text-white">' . $sentence_to_bold . '</span>';
-                            if (strpos($about_main_text, $sentence_to_bold) !== false) {
-                                $formatted = str_replace($sentence_to_bold, $replace_with, $about_main_text);
-                                echo $formatted;
-                            } else {
-                                echo wp_kses_post($about_main_text);
-                            }
-                        }
-                        ?>
-                    </h2>
+                    <?php if (!empty($about_main_text)): ?>
+                        <h2 class="text-xl md:text-3xl mb-10 text-white tracking-wide leading-relaxed max-w-xl lg:max-w-md">
+                            <?php echo $about_main_text ?>
+                        </h2>
+                    <?php else: ?>
+                        <p class="font-medium uppercase tracking-wider leading-none">
+                            $about_main_text was not imported
+                        </p>
+                    <?php endif; ?>
 
                     <a href="#wyprawy"
-                        class="inline-flex items-center space-x-2 border-2 border-white rounded-full px-8 py-3 hover:bg-white hover:text-black transition-colors duration-300 group">
-                        <span class="font-medium text-sm uppercase tracking-wider">
-                            <?php echo esc_html($about_button_text); ?>
+                        class="inline-flex items-center justify-center gap-4 border-2 border-white rounded-full px-8 py-3 hover:bg-white hover:text-black transition-colors duration-300">
+
+                        <span class="font-medium uppercase tracking-wider leading-none">
+                            <?php if (!empty($about_button_text)): ?>
+                                <?php echo $about_button_text ?>
+                            <?php else: ?>
+                                <p class="font-medium uppercase tracking-wider leading-none">
+                                    $about_button_text was not imported
+                                </p>
+                            <?php endif; ?>
+
                         </span>
 
-                        <span class="font-bold text-lg leading-none">
-                            ↓
-                        </span>
+                        <i data-lucide="arrow-down" stroke-width="2" class="block size-4">
+                        </i>
                     </a>
                 </div>
 
@@ -84,9 +83,6 @@ $hero_bg_image = get_field('home_hero_bg_image');
                                 <?php endforeach; ?>
                             </div>
 
-                            <div class="swiper-button-next !right-6"></div>
-                            <div class="swiper-button-prev !left-6"></div>
-                            <div class="swiper-pagination"></div>
                         </div>
                     <?php else: ?>
                         <div class="h-[400px] flex items-center justify-center border border-gray-700 rounded-xl">
@@ -102,35 +98,39 @@ $hero_bg_image = get_field('home_hero_bg_image');
 
     <?php
     // TRIPS variables
-    $trips_main_text = get_field('home_trips_main_text');
-    $trips_secondary_text = get_field('home_trips_secondary_text');
-    $trips_simple_text_first = get_field('home_trips_simple_text_intro');
-    $home_trips_simple_text_second = get_field('home_trips_simple_text_next');
-    $home_trips_simple_text_third = get_field('home_trips_simple_text_bold');
-    $trips_button_text = get_field('home_trips_button_text');
-    $trips_images = get_field('home_trips_images');
-    $trips_card_details = get_field('home_trips_card_details');
+    $trips_main_text = get_field('home_trips_main_text') ?? "";
+    $trips_secondary_text = get_field('home_trips_secondary_text') ?? "";
+    $trips_simple_text_first = get_field('home_trips_simple_text_intro') ?? "";
+    $home_trips_simple_text_second = get_field('home_trips_simple_text_next') ?? "";
+    $home_trips_simple_text_third = get_field('home_trips_simple_text_bold') ?? "";
+    $trips_button_text = get_field('home_trips_button_text') ?? "";
+    $trips_images = get_field('home_trips_images') ?? "";
+    $trips_card_details = get_field('home_trips_card_details') ?? "";
+    // var test
+    $trips_test = get_field("home_trips_test") ?? "";
     ?>
 
     <section id="trips" class="section section-trips w-[1280px] mx-auto text-gray-800 lg:pt-20">
         <div class="container mx-auto px-4">
 
             <h1 class="text-4xl md:text-6xl">
-                <?php
-
-                $sentence_to_bold = "stworzone z pasji";
-
-                $replace_with = '<span class=" font-bold">' . $sentence_to_bold . '</span>';
-
-                $formatted = str_replace($sentence_to_bold, $replace_with, $trips_main_text);
-
-                echo $formatted;
-                ?>
+                <?php if (!empty($trips_main_text)): ?>
+                    <?php echo $trips_main_text ?>
+                <?php else: ?>
+                    <p class="font-medium uppercase tracking-wider leading-none">
+                        $trips_main_text was not imported
+                    </p>
+                <?php endif; ?>
             </h1>
 
-            <div class=" text-3xl font-normal mt-4"> <!-- make text colors consistent -->
+            <div class="text-3xl font-normal mt-4"> <!-- make text colors consistent -->
                 <?php echo $trips_secondary_text; ?>
             </div>
+
+            <!-- TODO - fix wysiwyg var in acf -->
+            <!-- <p class="text-xl">
+                <?php echo esc_html($trips_test); ?>
+            </p> -->
 
             <div class="mt-10">
                 <p class="text-xl">
@@ -148,25 +148,41 @@ $hero_bg_image = get_field('home_hero_bg_image');
 
             <!-- trips btn -->
             <a href="/odkrywaj-z-nami"
-                class="inline-flex items-center space-x-4 border-2 border-red-500 rounded-full px-8 py-4 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300">
-                <span class="font-medium text-sm">
+                class="inline-flex items-center space-x-2 group border-2 border-red-500 rounded-full px-8 py-4 text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300">
+                <span class="font-medium">
                     <?php echo esc_html($trips_button_text); ?>
                 </span>
-                <span class="font-bold">→</span>
+                <span class="font-bold">
+                    <i data-lucide="arrow-right" stroke-width="2"
+                        class="block size-5 group-hover:translate-x-1 transition-transform duration-300">
+                    </i>
+
+
+                </span>
             </a>
 
             <!-- trips images -->
+            <?php
+            $trips_images = get_field('home_trips_images');
+
+            $trips_card_details = get_field('home_trips_card_details');
+            ?>
+
             <?php if ($trips_images): ?>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 pb-20">
 
                     <?php
-                    $titles = ["Wyjazdy na tory", "Wyjazdy po drogach", "Eventy firmowe"]; // get from acf
-                
                     $offset_classes = ['', 'lg:mt-8', 'lg:mt-16'];
 
-                    foreach ($trips_images as $index => $image_url):
+                    foreach ($trips_images as $index => $image_data):
 
-                        $current_title = isset($titles[$index]) ? $titles[$index] : 'Wyprawa';
+                        if (is_array(value: $trips_card_details) && isset($trips_card_details[$index])) {
+                            $current_title = $trips_card_details[$index]['card_title'];
+                        } else {
+                            $current_title = 'Wyprawa';
+                        }
+
+                        $image_url = is_array($image_data) ? $image_data['url'] : $image_data;
 
                         $offset_class = isset($offset_classes[$index]) ? $offset_classes[$index] : '';
                         ?>
@@ -201,21 +217,130 @@ $hero_bg_image = get_field('home_hero_bg_image');
     $photo_bg_image = get_field('home_photo_bg_image');
     $photo_left_side = get_field('home_photo_bg_image_left');
     $photo_right_side = get_field('home_photo_bg_image_right');
-    // $photo_text_main = get_field('home_cta_text_main');
-    // $photo_sub_text_bold = get_field('photo_sub_text_bold');
-    // $photo_sub_text_cd = get_field('photo_sub_text_bold_cd');
-    // $photo_gallery = get_field('home_photo_images');
-    // $photo_button_text = get_field('home_cta_button_text');
+    $photo_main_text = get_field('home_photo_main_text');
+    $photo_sub_text_bold = get_field('photo_sub_text_bold');
+    $photo_sub_text_next = get_field('photo_sub_text_next');
+    $photo_gallery = get_field('home_photo_images');
+    $photo_button_text = get_field('photo_btn_text');
     ?>
 
-    <section id="photo" class=" w-full min-h-screen
-        bg-cover bg-center overflow-hidden rounded-tl-[270px]" style="
-        background-image: url('<?php echo esc_url($photo_bg_image); ?> ');">
-        <!-- <div class="absolute inset-0 bg-black/30"></div> -->
-        <div class="inherit">
-            <img src="" alt="">
+    <section id="photo" class="relative w-full">
+
+        <!-- main background -->
+        <div class="relative w-full min-h-[85vh] bg-cover bg-center overflow-hidden rounded-tl-[270px]"
+            style="background-image: url('<?php echo esc_url($photo_bg_image); ?>');">
+            <div class="absolute inset-0 bg-black/30"></div>
         </div>
+
+        <!-- background split -->
+        <div class="relative w-full min-h-[140vh] flex flex-col md:flex-row overflow-hidden">
+            <div class="w-full md:w-1/2 h-[60vh] md:h-auto bg-cover bg-center bg-black"
+                style="<?php echo top_pear_get_bg_style(field_name: 'home_photo_bg_image_left'); ?>">
+            </div>
+            <div class="w-full md:w-1/2 h-[60vh] md:h-auto bg-cover bg-center bg-black"
+                style="<?php echo top_pear_get_bg_style(field_name: 'home_photo_bg_image_right'); ?>">
+            </div>
+            <div class="absolute inset-0 bg-black/75"></div>
+        </div>
+
+        <!-- main text -->
+        <div class="absolute left-0 w-full top-[calc(80vh-20px)] pointer-events-none">
+            <div class="container mx-auto px-4 max-w-5xl">
+                <h1
+                    class="text-4xl md:text-6xl text-white drop-shadow-lg leading-normal text-left pb-10 pointer-events-auto">
+                    <?php echo wp_kses_post($photo_main_text); ?>
+                </h1>
+            </div>
+        </div>
+
+        <!-- sub text -->
+        <div class="absolute left-0 w-full top-[calc(100vh)] pointer-events-none">
+            <div class="container mx-auto px-4 max-w-5xl">
+                <h2
+                    class="text-xl md:text-3xl text-white drop-shadow-lg leading-normal text-left pb-10 pointer-events-auto">
+                    <?php echo wp_kses_post($photo_sub_text_bold); ?>
+                </h2>
+            </div>
+        </div>
+
+        <!-- text cd -->
+        <div class="absolute left-0 w-full top-[calc(120vh-20px)] pointer-events-none">
+            <div class="container mx-auto px-4 max-w-5xl">
+                <h3
+                    class="text-xl md:text-3xl text-white drop-shadow-lg leading-normal text-left pb-10 pointer-events-auto">
+                    <?php echo wp_kses_post($photo_sub_text_next); ?>
+                </h3>
+            </div>
+        </div>
+
+        <!-- gallery + btn -->
+        <div class="absolute left-0 w-full top-[calc(140vh-40px)] z-20 pointer-events-none pb-20">
+
+            <div class="container mx-auto px-4 pointer-events-auto max-w-5xl">
+
+                <?php if ($photo_gallery): ?>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+                        <?php foreach ($photo_gallery as $image_url): ?>
+                            <div class="relative aspect-square group overflow-hidden rounded-lg shadow-xl cursor-pointer">
+                                <img src="<?php echo esc_url($image_url); ?>" alt="Galeria Top Pear"
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                <div
+                                    class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300">
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="flex justify-center w-full"> <a href="/odkrywaj-z-nami"
+                        class="inline-flex items-center space-x-2 group border-2 text-white border-white rounded-full px-8 py-3 hover:bg-white hover:text-black transition-colors duration-300">
+                        <span class="font-medium">
+                            <?php echo esc_html($trips_button_text); ?>
+                        </span>
+                        <i data-lucide="arrow-right" stroke-width="2"
+                            class="block size-5 group-hover:translate-x-1 transition-transform duration-300">
+                        </i>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
     </section>
+
+
+
+    <!-- <section id="photo" class="relative w-full overflow-hidden">
+
+        <div class="relative w-full min-h-screen bg-cover bg-center"
+            style="background-image: url('<?php echo esc_url($photo_bg_image); ?>');">
+        </div>
+
+        <div class="relative w-full min-h-[120vh] flex flex-col md:flex-row">
+
+            <div class="w-full md:w-1/2 h-[60vh] md:h-auto bg-cover bg-center"
+                style="<?php echo top_pear_get_bg_style('home_photo_bg_image_left'); ?>">
+            </div>
+
+            <div class="w-full md:w-1/2 h-[60vh] md:h-auto bg-cover bg-center"
+                style="<?php echo top_pear_get_bg_style('home_photo_bg_image_right'); ?>">
+            </div>
+
+        </div>
+
+        <div class="absolute left-0 w-full flex justify-center text-center pointer-events-none"
+            style="top: calc(100vh - 50px);">
+
+            <h2 class="text-4xl md:text-6xl text-white drop-shadow-lg max-w-5xl mx-auto">
+                <?php echo wp_kses_post($photo_main_text); ?>
+            </h2>
+
+        </div>
+
+    </section> -->
+
+
 
     <?php
     // FAQ variables
@@ -228,7 +353,7 @@ $hero_bg_image = get_field('home_hero_bg_image');
         <div class="container mx-auto max-w-5xl">
 
             <?php if (!empty($faq_main_text)): ?>
-                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4"> <!-- 4/5 xl text -->
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
                     <?php echo esc_html($faq_main_text); ?>
                 </h2>
             <?php endif; ?>
@@ -240,9 +365,9 @@ $hero_bg_image = get_field('home_hero_bg_image');
             <?php endif; ?>
 
             <div class="space-y-4">
-
                 <?php
                 if (have_rows('faq_repeater')):
+                    $i = 0;
                     while (have_rows('faq_repeater')):
                         the_row();
 
@@ -250,30 +375,26 @@ $hero_bg_image = get_field('home_hero_bg_image');
                         $answer = get_sub_field('faq_answer');
 
                         $i++;
-                        $unique_id = "faq-answer-" . $i;
+                        $unique_id = "faq-answer" . $i;
                         ?>
 
-                        <div class="faq-item bg-white p-3">
+                        <div class="faq-item bg-white p-3 border-b border-gray-100 last:border-0">
                             <button
-                                class="faq-question w-full text-lg md:text-xl font-bold cursor-pointer flex justify-between items-center text-left space-x-5"
+                                class="group faq-question w-full text-lg md:text-xl font-bold cursor-pointer flex items-center text-left py-2 hover:bg-gray-50 transition-colors duration-200 space-x-4"
                                 aria-expanded="false" aria-controls="<?php echo esc_attr($unique_id); ?>">
 
-                                <svg class="plus-icon ml-3 text-black size-6 flex-shrink-0 transform transition duration-300"
-                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M11.47 7.72a.75.75 0 011.06 0l7.5 7.5a.75.75 0 11-1.06 1.06L12 9.31l-6.97 6.97a.75.75 0 01-1.06-1.06l7.5-7.5z"
-                                        clip-rule="evenodd" />
-                                </svg>
+                                <i data-lucide="chevron-down"
+                                    class="plus-icon text-black w-6 h-6 flex-shrink-0 transform transition-transform duration-300 group-aria-expanded:rotate-180">
+                                </i>
 
-                                <h3 class="flex-grow my-0 py-4">
+                                <h3 class="my-0">
                                     <?php echo esc_html($question); ?>
                                 </h3>
+
                             </button>
 
-
-
-                            <div id="<?php echo esc_attr($unique_id); ?>" class="faq-answer pl-6 text-lg tracking-normal"
-                                style="display: none;">
+                            <div id="<?php echo esc_attr($unique_id); ?>"
+                                class="faq-answer pl-10 pt-2 pb-4 text-lg tracking-normal text-gray-600" style="display: none;">
                                 <?php echo $answer; ?>
                             </div>
                         </div>

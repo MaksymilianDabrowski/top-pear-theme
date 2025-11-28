@@ -5,7 +5,6 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
     <?php wp_head(); ?>
 </head>
 
@@ -17,5 +16,3 @@
         <main id="content" class="site-content pt-[180px]">
         </main>
 </body>
-
-</html>

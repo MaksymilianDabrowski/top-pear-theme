@@ -49,7 +49,7 @@ if (function_exists('acf_add_local_field_group')):
                 'key' => 'field_home_about_main_text',
                 'label' => 'Tekst Główny O Nas',
                 'name' => 'home_about_main_text',
-                'type' => 'textarea',
+                'type' => 'wysiwyg',
             ],
             [
                 'key' => 'field_home_about_button_text',
@@ -75,13 +75,19 @@ if (function_exists('acf_add_local_field_group')):
                 'key' => 'field_home_trips_main_text',
                 'label' => 'Tekst Główny',
                 'name' => 'home_trips_main_text',
-                'type' => 'text',
+                'type' => 'wysiwyg',
             ],
             [
                 'key' => 'field_home_trips_secondary_text',
                 'label' => 'Tekst Poniżej',
                 'name' => 'home_trips_secondary_text',
                 'type' => 'text',
+            ],
+            [
+                'key' => 'field_home_trips_test',
+                'label' => 'Tekst sekcji',
+                'name' => 'home_trips_test',
+                'type' => 'wysiwyg',
             ],
             [
                 'key' => 'field_home_trips_simple_text_intro',
@@ -117,7 +123,7 @@ if (function_exists('acf_add_local_field_group')):
                         'label' => 'Tytuł Karty',
                         'name' => 'card_title', // Sub-pole
                         'type' => 'text',
-                        'required' => 1,
+                        'required' => 3,
                     ],
                 ],
             ],
@@ -181,13 +187,13 @@ if (function_exists('acf_add_local_field_group')):
                 'key' => 'field_home_photo_main_text',
                 'label' => 'Tekst Główny Sekcji Photo',
                 'name' => 'home_photo_main_text',
-                'type' => 'text',
+                'type' => 'wysiwyg', // test 
             ],
             [
                 'key' => 'field_photo_sub_text_bold',
                 'label' => 'Pogróbiony Tekst Poboczny Sekcji Photo',
                 'name' => 'photo_sub_text_bold',
-                'type' => 'text',
+                'type' => 'wysiwyg',
             ],
             [
                 'key' => 'field_photo_sub_text_next',
